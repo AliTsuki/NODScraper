@@ -40,6 +40,7 @@
  * END
  * 
  * http://jaunt-api.com/jaunt-tutorial.htm
+ * https://github.com/PhotonPhighter/NODScraper
  */
 package nodscraper;
 
@@ -51,10 +52,10 @@ import java.io.*;
  */
 public class Main{
 	/**
-	 * 
+	 * ARGGIMOOOLIDOO NOTHING TO SEE HERE
 	 */
 	public Main(){
-		//Auto-generated constructor stub
+		//Auto-generated constructor stub, exists for reasons and stuff, not really
 	}
 	/**
 	 * @param args
@@ -66,7 +67,7 @@ public class Main{
 		try{
 			UserAgent userAgent = new UserAgent();	//create new userAgent (headless browser).
 			userAgent.visit(siteStringURL);	//visit a url  
-			//System.out.println(userAgent.doc.innerHTML());	//print the document as HTML
+			//System.out.println(userAgent.doc.innerHTML());	//print the document as HTML, for debugging or something
 			userAgent.doc.apply(	//submit infos for a web application
 				"ND",	//fill the Enter Kind of Instrument (KOI) field with "ND" for Notice of Default
 				dateToSearch //fill the Beginning Recording Date field with dateToSearch
@@ -75,7 +76,8 @@ public class Main{
 			System.out.println(userAgent.getLocation());	//print out the current URL given by the above submission
 			siteStringURL = userAgent.getLocation();	//put the URL into siteStringURL String
 			userAgent.visit(siteStringURL);	//visit the new page gathered from earlier submission
-			System.out.println(userAgent.doc.innerHTML());	//print the document as HTML
+			System.out.println(userAgent.doc.innerHTML());	//print the document as HTML, for debugging or something
+			
 		}//end of try statement
 		catch(JauntException e){	//if an HTTP/connection error occurs, handle JauntException.
 			System.err.println(e);	//print error to console
