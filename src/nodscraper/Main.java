@@ -47,7 +47,7 @@ import com.jaunt.*;
 import com.jaunt.component.*;
 import java.io.*;
 /**
- * @author AliM
+ * @author Ali M
  */
 public class Main{
 	/**
@@ -60,30 +60,24 @@ public class Main{
 	 * @param args
 	 */
 	public static void main(String[] args){
-		//TUTORIAL INFOS
+		//?? Experimental ??
+		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoiForm.asp";
+		String dateToSearch = "10/01/2014";
 		try{
-			UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
-			userAgent.visit("http://oracle.com");                        //visit a url  
-			System.out.println(userAgent.doc.innerHTML());               //print the document as HTML
+			UserAgent userAgent = new UserAgent();	//create new userAgent (headless browser).
+			userAgent.visit(siteStringURL);	//visit a url  
+			//System.out.println(userAgent.doc.innerHTML());	//print the document as HTML
+			userAgent.doc.apply(
+				"ND",
+				dateToSearch
+				);
+			userAgent.doc.submit("Search");
+			System.out.println(userAgent.getLocation());
+			siteStringURL = userAgent.getLocation();
+			
 		}
 		catch(JauntException e){         //if an HTTP/connection error occurs, handle JauntException.
 			System.err.println(e);
-		}
-		try{
-			UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
-			System.out.println("SETTINGS:\n" + userAgent.settings);      //print the userAgent's default settings.
-			userAgent.settings.autoSaveAsHTML = true;                    //change settings to autosave last visited page.
-			 
-			userAgent.visit("http://oracle.com");                        //visit a url.
-			String title = userAgent.doc.findFirst("<title>").getText(); //get child text of title element.
-			System.out.println("\nOracle's website title: " + title);    //print the title
-			 
-			userAgent.visit("http://amazon.com");                        //visit another url.
-			title = userAgent.doc.findFirst("<title>").getText();        //get child text of first title element.
-			System.out.println("\nAmazon's website title: " + title);    //print the title 
-		}
-		catch(JauntException e){   //if title element isn't found or HTTP/connection error occurs, handle JauntException.
-			  System.err.println(e);         
 		}
 	}//end of Main method
 }//end of Main class
