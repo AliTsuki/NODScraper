@@ -75,7 +75,7 @@ public class Main{
 		String DD = "01";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
 		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-		print("Fetching ND records for %s/%s/%s <%s>...", MM, DD, YYYY, siteStringURL);	//print current action
+		print("Fetching current ND records from %s/%s/%s <%s>...", MM, DD, YYYY, siteStringURL);	//print current action
 		try{
 			Document doc = Jsoup.connect(siteStringURL+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();	//connect to url
 			Elements links = doc.select("a[href]");	//get all the links in the current document and put them in a list
@@ -85,15 +85,17 @@ public class Main{
 			}//end of for loop
 			print("\nRecords: " + links.size());	//print how many links are left in the list
 			for (Element link : links){	//for every link element in the list, print below
-				print(" * a: <%s> (%s)", link.attr("abs:href"), trim(link.text(), 35));	//just mentioned above
-				//THIS IS WHERE THE REST OF CODE SHOULD FIT
+				String pointerSerial = trim(link.text(), 35);
 				String pointerURL = link.attr("abs:href");
+				print("<%s>", pointerURL);
+				print("(%s)", pointerSerial);
 				Document pointerDOC = Jsoup.connect(pointerURL).get();
+				//-----------
 			}//end of for loop
 		}//end of try statement
 		catch (IOException e){
 			e.printStackTrace();	//print stack trace if you fuck something up
-		}//end of catch statment
+		}//end of catch statement
 	}//end of Main method
 	
 	private static void print(String msg, Object... args){
