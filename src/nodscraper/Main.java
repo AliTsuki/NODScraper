@@ -1,6 +1,7 @@
 /**
  * For Scraping HTML data from a Notice of Default search on http://www.utahcounty.gov/LandRecords
  * 
+ * ------------------------START
  * http://www.utahcounty.gov/LandRecords/DocKoiForm.asp
  * Enter Kind of Instrument (KOI) "ND" //Notice of Default
  * Beginning Recording Date "<TODAYSDATE>" //Search only for today
@@ -37,21 +38,24 @@
  * html>body>table>tbody>tr>td>em.italic>table>tbody>tr
  * Need any number $ on far right table CONSIDERATION, SATISFACTION, TIE ENTRY NO
  * Get left side for values other than 0, GRANTOR, GRANTEE, COMMENTS //STORE ALL GRANTOR/GRANTEE INFO
- * END
+ * ------------------------END
  * 
- * http://jsoup.org/apidocs/ //JSOUP IS BETTER
- * https://github.com/PhotonPhighter/NODScraper
+ * http://jsoup.org/apidocs/ //Documentation for Java HTML parser API
+ * https://github.com/PhotonPhighter/NODScraper //Location of SOURCE CODE
  */
 
 package nodscraper;
 
-import java.io.*;
+import java.io.IOException;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
- * @author Ali M
+ * @author Ali M (PhotonPhighter/Admiral Nero the XCIV)
  */
 
 public class Main{
@@ -64,19 +68,36 @@ public class Main{
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 		//?? Experimental ??
 		String MM = "10";	//month you want to start search at
 		String DD = "01";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
 		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
+		print("Fetching ND records for %s/%s/%s <%s>...", MM, DD, YYYY, siteStringURL);
 		try{
 			Document doc = Jsoup.connect(siteStringURL+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();
+			Elements links = doc.select("a[href]");
+			print("\nRecords: " + links.size());
+			for (Element link : links){
+				print(" * a: <%s> (%s)", link.attr("abs:href"), trim(link.text(), 35));
+			}//end of for loop
 			doc.childNodes();
-			System.out.println(doc);
+			//System.out.println(doc);
 		}//end of try statement
 		catch (IOException e){
 			e.printStackTrace();
 		}//end of catch statment
 	}//end of Main method
+	
+	private static void print(String msg, Object... args){
+		System.out.println(String.format(msg,  args));
+	}//end of print method
+	
+	private static String trim(String s, int width){
+		if (s.length() > width)
+			return s.substring(0, width-1)+".";
+		else
+			return s;
+	}//end of trim method
 }//end of Main class
