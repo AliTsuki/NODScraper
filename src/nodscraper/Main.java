@@ -38,6 +38,8 @@
  * Need any number $ on far right table CONSIDERATION, SATISFACTION, TIE ENTRY NO
  * Get left side for values other than 0, GRANTOR, GRANTEE, COMMENTS //STORE ALL GRANTOR/GRANTEE INFO
  * END
+ * 
+ * http://jaunt-api.com/jaunt-tutorial.htm
  */
 package nodscraper;
 
@@ -58,6 +60,30 @@ public class Main{
 	 * @param args
 	 */
 	public static void main(String[] args){
-		
-	}
-}
+		//TUTORIAL INFOS
+		try{
+			UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
+			userAgent.visit("http://oracle.com");                        //visit a url  
+			System.out.println(userAgent.doc.innerHTML());               //print the document as HTML
+		}
+		catch(JauntException e){         //if an HTTP/connection error occurs, handle JauntException.
+			System.err.println(e);
+		}
+		try{
+			UserAgent userAgent = new UserAgent();                       //create new userAgent (headless browser).
+			System.out.println("SETTINGS:\n" + userAgent.settings);      //print the userAgent's default settings.
+			userAgent.settings.autoSaveAsHTML = true;                    //change settings to autosave last visited page.
+			 
+			userAgent.visit("http://oracle.com");                        //visit a url.
+			String title = userAgent.doc.findFirst("<title>").getText(); //get child text of title element.
+			System.out.println("\nOracle's website title: " + title);    //print the title
+			 
+			userAgent.visit("http://amazon.com");                        //visit another url.
+			title = userAgent.doc.findFirst("<title>").getText();        //get child text of first title element.
+			System.out.println("\nAmazon's website title: " + title);    //print the title 
+		}
+		catch(JauntException e){   //if title element isn't found or HTTP/connection error occurs, handle JauntException.
+			  System.err.println(e);         
+		}
+	}//end of Main method
+}//end of Main class
