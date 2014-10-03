@@ -86,6 +86,9 @@ public class Main{
 			print("\nRecords: " + links.size());	//print how many links are left in the list
 			for (Element link : links){	//for every link element in the list, print below
 				print(" * a: <%s> (%s)", link.attr("abs:href"), trim(link.text(), 35));	//just mentioned above
+				//THIS IS WHERE THE REST OF CODE SHOULD FIT
+				String pointerURL = link.attr("abs:href");
+				Document pointerDOC = Jsoup.connect(pointerURL).get();
 			}//end of for loop
 		}//end of try statement
 		catch (IOException e){
