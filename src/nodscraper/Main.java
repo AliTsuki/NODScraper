@@ -67,17 +67,18 @@ public class Main{
 			UserAgent userAgent = new UserAgent();	//create new userAgent (headless browser).
 			userAgent.visit(siteStringURL);	//visit a url  
 			//System.out.println(userAgent.doc.innerHTML());	//print the document as HTML
-			userAgent.doc.apply(
-				"ND",
-				dateToSearch
+			userAgent.doc.apply(	//submit infos for a web application
+				"ND",	//fill the Enter Kind of Instrument (KOI) field with "ND" for Notice of Default
+				dateToSearch //fill the Beginning Recording Date field with dateToSearch
 				);
-			userAgent.doc.submit("Search");
-			System.out.println(userAgent.getLocation());
-			siteStringURL = userAgent.getLocation();
-			
-		}
-		catch(JauntException e){         //if an HTTP/connection error occurs, handle JauntException.
-			System.err.println(e);
-		}
+			userAgent.doc.submit("Search");	//press the submission button labelled "Search"
+			System.out.println(userAgent.getLocation());	//print out the current URL given by the above submission
+			siteStringURL = userAgent.getLocation();	//put the URL into siteStringURL String
+			userAgent.visit(siteStringURL);	//visit the new page gathered from earlier submission
+			System.out.println(userAgent.doc.innerHTML());	//print the document as HTML
+		}//end of try statement
+		catch(JauntException e){	//if an HTTP/connection error occurs, handle JauntException.
+			System.err.println(e);	//print error to console
+		}//end of catch statement
 	}//end of Main method
 }//end of Main class
