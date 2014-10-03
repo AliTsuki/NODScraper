@@ -53,6 +53,7 @@ import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.select.Evaluator;
 
 /**
  * @author Ali M (PhotonPhighter/Admiral Nero the XCIV)
@@ -74,30 +75,32 @@ public class Main{
 		String DD = "01";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
 		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-		print("Fetching ND records for %s/%s/%s <%s>...", MM, DD, YYYY, siteStringURL);
+		print("Fetching ND records for %s/%s/%s <%s>...", MM, DD, YYYY, siteStringURL);	//print current action
 		try{
-			Document doc = Jsoup.connect(siteStringURL+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();
-			Elements links = doc.select("a[href]");
-			print("\nRecords: " + links.size());
-			for (Element link : links){
-				print(" * a: <%s> (%s)", link.attr("abs:href"), trim(link.text(), 35));
+			Document doc = Jsoup.connect(siteStringURL+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();	//connect to url
+			Elements links = doc.select("a[href]");	//get all the links in the current document and put them in a list
+			links.remove(0);	//remove first link, as it is superfluous
+			for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are superfluous
+				links.remove(links.size()-1);	//just said it, right there above
 			}//end of for loop
-			doc.childNodes();
-			//System.out.println(doc);
+			print("\nRecords: " + links.size());	//print how many links are left in the list
+			for (Element link : links){	//for every link element in the list, print below
+				print(" * a: <%s> (%s)", link.attr("abs:href"), trim(link.text(), 35));	//just mentioned above
+			}//end of for loop
 		}//end of try statement
 		catch (IOException e){
-			e.printStackTrace();
+			e.printStackTrace();	//print stack trace if you fuck something up
 		}//end of catch statment
 	}//end of Main method
 	
 	private static void print(String msg, Object... args){
-		System.out.println(String.format(msg,  args));
+		System.out.println(String.format(msg,  args));	//useful method for printing to console
 	}//end of print method
 	
 	private static String trim(String s, int width){
 		if (s.length() > width)
 			return s.substring(0, width-1)+".";
 		else
-			return s;
+			return s;	//useful method for trimming Strings for links list
 	}//end of trim method
 }//end of Main class
