@@ -2,10 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/jordan/Downloads/jaunt0.9.9.2/jaunt0.9.9.2/jaunt0.9.9.2.jar">
+	<classpathentry kind="lib" path="C:/Users/jordan/Downloads/jsoup-1.8.1.jar" sourcepath="C:/Users/jordan/Downloads/jsoup-1.8.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/C:/Users/jordan/Downloads/jaunt0.9.9.2/jaunt0.9.9.2/javadocs/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/jordan/Downloads/jsoup-1.8.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jordan/Downloads/jsoup-1.8.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jordan/Downloads/jsoup-1.8.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

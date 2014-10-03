@@ -39,17 +39,21 @@
  * Get left side for values other than 0, GRANTOR, GRANTEE, COMMENTS //STORE ALL GRANTOR/GRANTEE INFO
  * END
  * 
- * http://jaunt-api.com/jaunt-tutorial.htm
+ * http://jsoup.org/apidocs/ //JSOUP IS BETTER
  * https://github.com/PhotonPhighter/NODScraper
  */
+
 package nodscraper;
 
-import com.jaunt.*;
-import com.jaunt.component.*;
 import java.io.*;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 /**
  * @author Ali M
  */
+
 public class Main{
 	/**
 	 * ARGGIMOOOLIDOO NOTHING TO SEE HERE
@@ -62,25 +66,17 @@ public class Main{
 	 */
 	public static void main(String[] args){
 		//?? Experimental ??
-		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoiForm.asp";
-		String dateToSearch = "10/01/2014";
+		String MM = "10";	//month you want to start search at
+		String DD = "01";	//day you want to start search at
+		String YYYY = "2014";	//year you want to start search at
+		String siteStringURL = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
 		try{
-			UserAgent userAgent = new UserAgent();	//create new userAgent (headless browser).
-			userAgent.visit(siteStringURL);	//visit a url  
-			//System.out.println(userAgent.doc.innerHTML());	//print the document as HTML, for debugging or something
-			userAgent.doc.apply(	//submit infos for a web application
-				"ND",	//fill the Enter Kind of Instrument (KOI) field with "ND" for Notice of Default
-				dateToSearch //fill the Beginning Recording Date field with dateToSearch
-				);
-			userAgent.doc.submit("Search");	//press the submission button labelled "Search"
-			System.out.println(userAgent.getLocation());	//print out the current URL given by the above submission
-			siteStringURL = userAgent.getLocation();	//put the URL into siteStringURL String
-			userAgent.visit(siteStringURL);	//visit the new page gathered from earlier submission
-			System.out.println(userAgent.doc.innerHTML());	//print the document as HTML, for debugging or something
-			
+			Document doc = Jsoup.connect(siteStringURL+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();
+			doc.childNodes();
+			System.out.println(doc);
 		}//end of try statement
-		catch(JauntException e){	//if an HTTP/connection error occurs, handle JauntException.
-			System.err.println(e);	//print error to console
-		}//end of catch statement
+		catch (IOException e){
+			e.printStackTrace();
+		}//end of catch statment
 	}//end of Main method
 }//end of Main class
