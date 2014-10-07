@@ -49,11 +49,9 @@ package nodscraper;
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Evaluator;
 
 /**
  * @author Ali M (PhotonPhighter/Admiral Nero the XCIV)
@@ -65,7 +63,7 @@ public class Main{
 	 */
 	public Main(){
 		//Auto-generated constructor stub, exists for reasons and stuff, not really
-	}
+	}//end of Main constructor
 	/**
 	 * @param args
 	 */
@@ -85,40 +83,43 @@ public class Main{
 			}//end of for loop
 			print("\nRecords: " + linksOnCompletedSearch.size());	//print how many links are left in the list from completed search
 			for (Element link : linksOnCompletedSearch){	//for every link element in the list of links do what's below
-				String stringFileSerialNumber = trim(link.text(), 35);	//collect the serial number for each case
-				String stringURLForFileSerialNumber = link.attr("abs:href");	//collect the URL for connecting to particular serial number's page
-				//print("*  <%s>", serialPage);	//ignore, for debugging
-				print("(%s)", stringFileSerialNumber);	//print out the gathered serial number
-				Document documentURLForSerialNumber = Jsoup.connect(stringURLForFileSerialNumber).get();	//connect to the URL for the serial number's page, to get the name
-				Elements linksOnSerialNumberPage = documentURLForSerialNumber.select("a[href]");	//get all the links listed on serial number page
-				//print ("Links: " + pointerlinks.size());	//ignore, for debugging
-				//below are different cases for the number of links on serial number page, as it varies
-				if (linksOnSerialNumberPage.size() < 9){	//if there are less than 9 links on serial number page, do below
-					linksOnSerialNumberPage.remove(0);	//remove first link as it is superfluous
-					linksOnSerialNumberPage.remove(0);	//remove second link "
+				String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
+				String stringURLForFileEntryNumber = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
+				//print("*  <%s>", stringURLForFileEntryNumber);	//ignore, for debugging
+				print("(%s)", stringFileEntryNumber);	//print out the gathered entry number
+				Document documentURLForEntryNumber = Jsoup.connect(stringURLForFileEntryNumber).get();	//connect to the URL for the entry number's page, to get the name
+				Elements linksOnEntryNumberPage = documentURLForEntryNumber.select("a[href]");	//get all the links listed on entry number page
+				print ("Links: " + linksOnEntryNumberPage.size());	//ignore, for debugging
+				/**
+				 * below are different cases for the number of links on entry number page, as it varies
+				 */
+				if (linksOnEntryNumberPage.size() < 9){	//if there are less than 9 links on entry number page, do below
+					linksOnEntryNumberPage.remove(0);	//remove first link as it is superfluous
+					linksOnEntryNumberPage.remove(0);	//remove second link "
 					for (int i=0; i<5; i++){	//iterate to remove the bottom 5 links, as they are also superfluous
-						linksOnSerialNumberPage.remove(linksOnSerialNumberPage.size()-1);	//said in line above
+						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);	//said in line above
 					}//end of nested for loop
 				}//end of if statement
-				if (linksOnSerialNumberPage.size() == 9){	//additional case, see above
-					linksOnSerialNumberPage.remove(0);
-					linksOnSerialNumberPage.remove(0);
-					for (int i=0; i<6; i++){
-						linksOnSerialNumberPage.remove(linksOnSerialNumberPage.size()-1);
+				if (linksOnEntryNumberPage.size() == 9){	//additional case, see above
+					linksOnEntryNumberPage.remove(0);
+					linksOnEntryNumberPage.remove(0);
+					for (int i=0; i<5; i++){
+						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);
 					}//end of nested for loop
 				}//end of if statement
-				if (linksOnSerialNumberPage.size() > 9){	//additional case, see above
-					linksOnSerialNumberPage.remove(0);
-					linksOnSerialNumberPage.remove(0);
-					for (int i=0; i<7; i++){
-						linksOnSerialNumberPage.remove(linksOnSerialNumberPage.size()-1);
+				if (linksOnEntryNumberPage.size() > 9){	//additional case, see above
+					linksOnEntryNumberPage.remove(0);
+					linksOnEntryNumberPage.remove(0);
+					for (int i=0; i<5; i++){
+						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);
 					}//end of nested for loop
+					linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-2);
 				}//end of else statement
-				String stringURLforGranteeName = linksOnSerialNumberPage.attr("abs:href");	//get the URL containing the Grantee's name
-				String stringGranteeName = trim(linksOnSerialNumberPage.text(), 35);	//get the actual name out of the link
-				for (Element link2 : linksOnSerialNumberPage){	//for all the links left, do below
+				String stringURLforGranteeName = linksOnEntryNumberPage.attr("abs:href");	//get the URL containing the Grantee's name
+				String stringGranteeName = trim(linksOnEntryNumberPage.text(), 35);	//get the actual name out of the link
+				for (Element link2 : linksOnEntryNumberPage){	//for all the links left, do below
 					stringURLforGranteeName = link2.attr("abs:href");	//??Wait, why?
-					//print("<%s>", serialPagePerson);	//ignore, for debugging
+					print("<%s>", stringURLforGranteeName);	//ignore, for debugging
 					print("(%s)\n", stringGranteeName);	//print the Grantee's name, going to use it for search later
 				}//end of nested for loop
 			}//end of for loop
