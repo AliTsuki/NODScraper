@@ -68,59 +68,82 @@ public class Main{
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException{
-		//?? Experimental ??
+		/** Experimental **/
 		String MM = "10";	//month you want to start search at
 		String DD = "01";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
-		String stringSiteURLForMainSearch = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-		print("Fetching current ND records from Date %s/%s/%s\n <%s>...", MM, DD, YYYY, stringSiteURLForMainSearch);	//print current action
+		String stringSiteURLMainSearch = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
+		print("Fetching current ND records from Date %s/%s/%s\n <%s>...", MM, DD, YYYY, stringSiteURLMainSearch);	//print current action
 		try{
-			Document documentCompletedSearch = Jsoup.connect(stringSiteURLForMainSearch+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search").get();	//connect to url
-			Elements linksOnCompletedSearch = documentCompletedSearch.select("a[href]");	//get all the links in the current document and put them in a list
-			linksOnCompletedSearch.remove(0);	//remove first link, as it is superfluous
+			Document documentCompletedSearch = Jsoup.connect(stringSiteURLMainSearch).get();	//connect to url
+			Elements linksCompletedSearch = documentCompletedSearch.select("a[href]");	//get all the links in the current document and put them in a list
+			linksCompletedSearch.remove(0);	//remove first link, as it is superfluous
 			for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are superfluous
-				linksOnCompletedSearch.remove(linksOnCompletedSearch.size()-1);	//just said it, right there above
+				linksCompletedSearch.remove(linksCompletedSearch.size()-1);	//just said it, right there above
 			}//end of for loop
-			print("\nRecords: " + linksOnCompletedSearch.size());	//print how many links are left in the list from completed search
-			for (Element link : linksOnCompletedSearch){	//for every link element in the list of links do what's below
+			print("\nRecords: " + linksCompletedSearch.size());	//print how many links are left in the list from completed search
+			for (Element link : linksCompletedSearch){	//for every link element in the list of links do what's below
 				String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
-				String stringURLForFileEntryNumber = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
-				//print("*  <%s>", stringURLForFileEntryNumber);	//ignore, for debugging
+				String stringURLFileEntryNumber = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
+				//print("*  <%s>", stringURLFileEntryNumber);	//ignore, for debugging
 				print("(%s)", stringFileEntryNumber);	//print out the gathered entry number
-				Document documentURLForEntryNumber = Jsoup.connect(stringURLForFileEntryNumber).get();	//connect to the URL for the entry number's page, to get the name
-				Elements linksOnEntryNumberPage = documentURLForEntryNumber.select("a[href]");	//get all the links listed on entry number page
-				print ("Links: " + linksOnEntryNumberPage.size());	//ignore, for debugging
+				Document documentURLEntryNumber = Jsoup.connect(stringURLFileEntryNumber).get();	//connect to the URL for the entry number's page, to get the name
+				Elements linksEntryNumberPage = documentURLEntryNumber.select("a[href]");	//get all the links listed on entry number page
+				//print ("Links: " + linksEntryNumberPage.size());	//ignore, for debugging
 				/**
 				 * below are different cases for the number of links on entry number page, as it varies
 				 */
-				if (linksOnEntryNumberPage.size() < 9){	//if there are less than 9 links on entry number page, do below
-					linksOnEntryNumberPage.remove(0);	//remove first link as it is superfluous
-					linksOnEntryNumberPage.remove(0);	//remove second link "
+				if (linksEntryNumberPage.size() < 9){	//if there are less than 9 links on entry number page, do below
+					linksEntryNumberPage.remove(0);	//remove first link as it is superfluous
+					linksEntryNumberPage.remove(0);	//remove second link "
 					for (int i=0; i<5; i++){	//iterate to remove the bottom 5 links, as they are also superfluous
-						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);	//said in line above
+						linksEntryNumberPage.remove(linksEntryNumberPage.size()-1);	//said in line above
 					}//end of nested for loop
 				}//end of if statement
-				if (linksOnEntryNumberPage.size() == 9){	//additional case, see above
-					linksOnEntryNumberPage.remove(0);
-					linksOnEntryNumberPage.remove(0);
-					for (int i=0; i<5; i++){
-						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);
+				else if (linksEntryNumberPage.size() == 9){	//additional case, see above
+					linksEntryNumberPage.remove(0);
+					linksEntryNumberPage.remove(0);
+					for (int i=0; i<6; i++){
+						linksEntryNumberPage.remove(linksEntryNumberPage.size()-1);
 					}//end of nested for loop
-				}//end of if statement
-				if (linksOnEntryNumberPage.size() > 9){	//additional case, see above
-					linksOnEntryNumberPage.remove(0);
-					linksOnEntryNumberPage.remove(0);
-					for (int i=0; i<5; i++){
-						linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-1);
+				}//end of else if statement
+				else if (linksEntryNumberPage.size() == 10){	//additional case, see above
+					linksEntryNumberPage.remove(0);
+					linksEntryNumberPage.remove(0);
+					for (int i=0; i<7; i++){
+						linksEntryNumberPage.remove(linksEntryNumberPage.size()-1);
 					}//end of nested for loop
-					linksOnEntryNumberPage.remove(linksOnEntryNumberPage.size()-2);
-				}//end of else statement
-				String stringURLforGranteeName = linksOnEntryNumberPage.attr("abs:href");	//get the URL containing the Grantee's name
-				String stringGranteeName = trim(linksOnEntryNumberPage.text(), 35);	//get the actual name out of the link
-				for (Element link2 : linksOnEntryNumberPage){	//for all the links left, do below
-					stringURLforGranteeName = link2.attr("abs:href");	//??Wait, why?
-					print("<%s>", stringURLforGranteeName);	//ignore, for debugging
-					print("(%s)\n", stringGranteeName);	//print the Grantee's name, going to use it for search later
+				}//end of else if statement
+				else print("Invalid number of links on page");	//if no case above is true, print error
+				String stringURLGranteeName = linksEntryNumberPage.attr("abs:href");	//get the URL containing the Grantee's name
+				String stringGranteeName = trim(linksEntryNumberPage.text(), 35);	//get the actual name out of the link
+				for (Element link2 : linksEntryNumberPage){	//for all the links left, do below
+					stringURLGranteeName = link2.attr("abs:href");	//collect URL containing Grantee name
+					//print("<%s>", stringURLGranteeName);	//ignore, for debugging
+					print("(%s)", stringGranteeName);	//print the Grantee's name, going to use it for search later
+					String stringURLNameSearch = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search, will need to fix this...
+					Document documentNameSearchResults = Jsoup.connect(stringURLNameSearch).get();	//connect to the URL for specific name search
+					Elements linksNameSearchResults = documentNameSearchResults.select("a[href]");	//collect all links on the specified URL
+					for (Element link3 : linksNameSearchResults){	//FIX THIS BITCH!!!
+						String stringSerialNumber = link3.attr("abs:href");	//FIX THIS BITCH!!!
+						//print("*  <%s>", stringURLNameSearch);	//ignore, for debugging
+						print ("Links: " + linksNameSearchResults.size());	//ignore, for debugging
+						print ("%s", stringSerialNumber);	//ignore, for debugging
+						linksNameSearchResults.remove(0);	//remove first result, as it is superfluous
+						for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are also superfluous
+						linksNameSearchResults.remove(linksNameSearchResults.size()-1);	//said in line above
+						}//end of nested for loop
+						if (linksNameSearchResults.size() == 6){
+						
+						}//end of if statement
+						else if (linksNameSearchResults.size() == 7){
+						
+						}//end of else if statement
+						else if (linksNameSearchResults.size() == 8){
+						
+						}//end of else if statement
+						else print("nooooope");
+					}//end of nexted for loop
 				}//end of nested for loop
 			}//end of for loop
 		}//end of try statement
