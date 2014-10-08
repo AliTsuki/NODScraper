@@ -2,12 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="jsoup-1.8.1.jar" sourcepath="jsoup-1.8.1-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/NODScraper/jsoup-1.8.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="jsoup-1.8.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="jsoup-1.8.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
