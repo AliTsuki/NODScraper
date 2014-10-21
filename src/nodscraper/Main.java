@@ -116,7 +116,7 @@ public class Main{
 						print(" -- URL of serial number page for entry: <%s>", stringURLOfSerialNumberPage);	//ignore, for debugging
 						print(" -- Serial Number: (%s)", stringSerialNumber);	//ignore, for debugging
 						Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
-						//Figure out how to navigate CSS with Jsoup so I can collect the addresses listed in the tables on the last visited page
+						//Figure out how to navigate CSS with Jsoup so I can collect the addresses listed in the tables on the last visited page, TIME TO STUDY!!
 					}//end of nested for loop
 				}//end of nested for loop
 			}//end of for loop
