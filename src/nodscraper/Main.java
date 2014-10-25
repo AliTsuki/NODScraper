@@ -59,7 +59,7 @@ import org.jsoup.select.Elements;
 
 public class Main{
 	/**
-	 * ARGGIMOOOLIDOO NOTHING TO SEE HERE
+	 * TODO: Finish code for grabbing Property Address and Mailing Address from tables, figure out how to output all the collected information into a CSV spreadsheet
 	 */
 	public Main(){
 		//Auto-generated constructor stub, exists for reasons and stuff, not really
@@ -68,7 +68,7 @@ public class Main{
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException{
-		/** Experimental **/
+		/** Experimental ** is hardcoded now, will need to make a small UI for inputting Date later**/
 		String MM = "10";	//month you want to start search at
 		String DD = "22";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
