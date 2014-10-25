@@ -70,7 +70,7 @@ public class Main{
 	public static void main(String[] args) throws IOException{
 		/** Experimental **/
 		String MM = "10";	//month you want to start search at
-		String DD = "01";	//day you want to start search at
+		String DD = "22";	//day you want to start search at
 		String YYYY = "2014";	//year you want to start search at
 		String stringURLofStartSearchPage = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
 		print("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
@@ -101,7 +101,7 @@ public class Main{
 					stringURLOfGranteeNamePage = link2.attr("abs:href");	//collect URL containing grantee name
 					print(" -- URL of grantee name page: <%s>", stringURLOfGranteeNamePage);	//ignore, for debugging
 					print(" -- Grantee Name: (%s)", stringGranteeName);	//print the Grantee's name, going to use it for search later
-					String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search, will need to fix this...
+					String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search
 					Document documentCompletedNameSearchResultsPageData = Jsoup.connect(stringURLOfNameSearchPage).get();	//connect to the URL for specific name search
 					Elements linksFromCompletedNameSearchResultsPageData = documentCompletedNameSearchResultsPageData.select("a[href]");	//collect all links on the specified URL
 					linksFromCompletedNameSearchResultsPageData.remove(0);	//remove first result, as it is superfluous
@@ -116,7 +116,10 @@ public class Main{
 						print(" -- URL of serial number page for entry: <%s>", stringURLOfSerialNumberPage);	//ignore, for debugging
 						print(" -- Serial Number: (%s)", stringSerialNumber);	//ignore, for debugging
 						Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
-						//Figure out how to navigate CSS with Jsoup so I can collect the addresses listed in the tables on the last visited page, TIME TO STUDY!!
+						Elements elementsSerialNumberPageData = documentSerialNumberPageData.select("#tabletext html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td");	//this is not even remotely correct... :(
+						Element elementAddress = elementsSerialNumberPageData.get(0);
+						System.out.println(elementAddress.text());
+						//Figure out how to navigate tables with Jsoup so I can collect the addresses listed in the tables on the last visited page, TIME TO STUDY!!
 					}//end of nested for loop
 				}//end of nested for loop
 			}//end of for loop
