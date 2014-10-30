@@ -46,7 +46,13 @@
 
 package nodscraper;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -59,7 +65,7 @@ import org.jsoup.select.Elements;
 
 public class Main{
 	/**
-	 * TODO: Finish code for grabbing Property Address and Mailing Address from tables, figure out how to output all the collected information into a CSV spreadsheet
+	 * TODO: Figure out proper CSV spreadsheet exporting
 	 */
 	public Main(){
 		//Auto-generated constructor stub, exists for reasons and stuff, not really
@@ -69,19 +75,74 @@ public class Main{
 	 */
 	public static void main(String[] args) throws IOException{
 		/** Experimental ** is hardcoded now, will need to make a small UI for inputting Date later**/
-		String MM = "10";	//month you want to start search at
-		String DD = "22";	//day you want to start search at
-		String YYYY = "2014";	//year you want to start search at
+		String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();	//get the location of the JAR for use below
+		String decodedPath = URLDecoder.decode(path, "UTF-8");	//decode the path of JAR
+		Date date = new Date();	//get date for use below
+		Calendar cal = Calendar.getInstance();	//get date as calendar for below
+		cal.setTime(date);	//set calendar time to date
+		int month = cal.get(Calendar.MONTH)+1;	//get current month, add 1 because calendar starts at 0 in java
+		int day = cal.get(Calendar.DAY_OF_MONTH);	//get current day
+		int year = cal.get(Calendar.YEAR);	//get current year
+		int hour = cal.get(Calendar.HOUR);	//get current hour
+		int minutes = cal.get(Calendar.MINUTE);	//get current minute
+		int seconds = cal.get(Calendar.SECOND);	//get current seconds
+		String MM = ""+month;	//month you want to start search at
+		String DD = ""+day;	//day you want to start search at
+		String YYYY = ""+year;	//year you want to start search at
+		//OPEN CONSOLE FOR ANSWERING QUESTIONS HERE
+		String stringDateExecuted = (month+"."+day+"."+year+"-"+hour+"."+minutes+"."+seconds);	//put all the current date data into a string for naming files
+		String sFileName = (decodedPath+"DATA/"+MM+"."+DD+"."+YYYY+"--"+stringDateExecuted);	//set file name to date looked up and date app ran
+		File dirDATA = new File(decodedPath+"DATA/");	//create the bones for a new directory for DATA
+		if (!dirDATA.exists()){	//check if directory already exists, if not do below
+			System.out.println("creating directory: " + dirDATA + "\n");	//print to console to affirm creation of directory
+		    boolean result = false;	//starting value
+		    try{
+		        dirDATA.mkdir();	//create the directory
+		        result = true;	//end value
+		     }//end of try
+		    catch(SecurityException se){}	//end of catch     
+		     if (result){	//if result is at end value, do below 
+		       System.out.println("DIR created\n");	//print to console to affirm completion of directory creation
+		     }//end of if statement
+		}//end of if statement
+		File dirLOGS = new File(decodedPath+"LOGS/");	//create the bones for a new directory for LOGS
+		if (!dirLOGS.exists()){	//check if directory already exists, if not do below
+			System.out.println("creating directory: " + dirLOGS + "\n");	//print to console to affirm creation of directory
+			boolean result = false;	//starting value
+			try{
+				dirLOGS.mkdir();	//create the directory
+				result = true;	//end value
+			} //end of try
+			catch(SecurityException se){}	//end of catch        
+			if (result){	//if result is at end value, do below  
+				System.out.println("DIR created\n");	//print to console to affirm completion of directory creation
+			}//end of if statement
+		}//end of if statement
+		System.out.println(sFileName+"\n");	//print to console the file name for logging
+		FileWriter writer = new FileWriter(sFileName+".csv");	//set up writer for CSV file
+		File fileCSV = new File(sFileName+".csv");	//set up the bones for the CSV file
+		if(!fileCSV.exists()) fileCSV.createNewFile();	//if CSV file doesn't exist, it shouldn't, then create it
+		FileOutputStream fileLOG = new FileOutputStream(decodedPath+"/LOGS/log.txt");	//set up stream to capture console to log
+	    NODPrintStream NOD = new NODPrintStream(fileLOG, System.out);	//set up console logging
+	    System.setOut(NOD);	//set up console logging
+	    writer.append("Tax ID");	//setting up row names of CSV file
+		writer.append(';');
+		writer.append("Grantee Name");
+		writer.append(';');
+		writer.append("Property Address");
+		writer.append(';');
+		writer.append("Mailing Address");
+		writer.append('\n');	//rows complete
 		String stringURLofStartSearchPage = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-		print("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
-		try{
+		print("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...\n", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
+		try {
 			Document documentUponCompletedSearchPageData = Jsoup.connect(stringURLofStartSearchPage).get();	//connect to URL
 			Elements linksFromDocumentUponCompletedSearchPageData = documentUponCompletedSearchPageData.select("a[href]");	//get all the links in the current document and put them in a list
 			linksFromDocumentUponCompletedSearchPageData.remove(0);	//remove first link, as it is superfluous
 			for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are superfluous
 				linksFromDocumentUponCompletedSearchPageData.remove(linksFromDocumentUponCompletedSearchPageData.size()-1);	//just said it, right there above
 			}//end of for loop
-			print("\n---->Number of total records from date forward: " + linksFromDocumentUponCompletedSearchPageData.size());	//print how many links are left in the list from completed search
+			print("---->Number of total records from date forward: " + linksFromDocumentUponCompletedSearchPageData.size()+"\n");	//print how many links are left in the list from completed search
 			for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
 				String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
 				String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
@@ -115,14 +176,32 @@ public class Main{
 						print(" -- Links on completed name search page: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
 						print(" -- URL of serial number page for entry: <%s>", stringURLOfSerialNumberPage);	//ignore, for debugging
 						print(" -- Serial Number: (%s)", stringSerialNumber);	//ignore, for debugging
-						Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
-						Elements elementsSerialNumberPageData = documentSerialNumberPageData.select("#tabletext html > body > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td");	//this is not even remotely correct... :(
-						Element elementAddress = elementsSerialNumberPageData.get(0);
-						System.out.println(elementAddress.text());
-						//Figure out how to navigate tables with Jsoup so I can collect the addresses listed in the tables on the last visited page, TIME TO STUDY!!
+						if (stringURLOfSerialNumberPage.length() > 50){	//make sure that the serial number URL is a correct URL by checking length is in normal range
+							Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
+							Elements innerTable = documentSerialNumberPageData.select("body > table:nth-child(2) > tbody > tr > td > table > tbody > tr > td > table:nth-child(2)");	//select the correct tables of data
+							String stringPropertyAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(3) > td > strong").first().nextSibling()).text();	//grab property address
+							String stringMailingAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(4) > td > strong").first().nextSibling()).text();	//grab mailing address
+							System.out.printf(" -- Property Address: %s\n -- Mailing Address: %s\n", stringPropertyAddress, stringMailingAddress);	//print out addresses
+							if (stringSerialNumber != null) writer.append(stringSerialNumber);	//write to CSV the different datas, if it is null, make us aware
+							else writer.append("NO TAX ID PROVIDED");
+							writer.append(';');
+							if (stringGranteeName != null) writer.append(stringGranteeName);
+							else writer.append("NO GRANTEE NAME PROVIDED");
+							writer.append(';');
+							if (stringPropertyAddress != null) writer.append(stringPropertyAddress);
+							else writer.append("NO PROPERTY ADDRESS PROVIDED");
+							writer.append(';');
+							if (stringMailingAddress != null) writer.append(stringMailingAddress);
+							else writer.append("NO MAILING ADDRESS PROVIDED");
+							writer.append('\n');
+							writer.flush();	//flush the writer after each iteration to keep it from crashing
+						}//end of if statement
+						else print("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
 					}//end of nested for loop
 				}//end of nested for loop
 			}//end of for loop
+			System.out.println("\n----> END OF DATA");	//print end of data disclosure for logs
+			writer.close();	//close up the writer to terminate
 		}//end of try statement
 		catch (IOException e){
 			e.printStackTrace();	//print stack trace if you fuck something up

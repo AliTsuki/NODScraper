@@ -1,0 +1,213 @@
+OOO-->Fetching current ND records from Date 10/22/2014
+ site: <http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate=10%2F22%2F2014&submit=Search>...
+
+---->Number of total records from date forward: 19
+
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=75582&avYear=2014>
+ -- File Entry Number: (75582)
+ -- Links on file entry page: 10
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=ASPEN VENTURES LLC>
+ -- Grantee Name: (ASPEN VENTURES LLC)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=ASPEN VENTURES LLC&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=170320104002>
+ -- Serial Number: (17:032:0104)
+ -- Property Address:   1187 N 1200 WEST - OREM
+ -- Mailing Address:  1270 E 2000 N PROVO, UT 84604-2148
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=75599&avYear=2014>
+ -- File Entry Number: (75599)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=SOLORZANO, JOSE A>
+ -- Grantee Name: (SOLORZANO, JOSE A)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=SOLORZANO, JOSE A&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=80290001007>
+ -- Serial Number: (08:029:0001)
+ -- Property Address:   100 E UTAH AV - PAYSON
+ -- Mailing Address:  85 E UTAH AV PAYSON, UT 84651
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=75905&avYear=2014>
+ -- File Entry Number: (75905)
+ -- Links on file entry page: 10
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=EVANS, ROBERT T>
+ -- Grantee Name: (EVANS, ROBERT T)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=EVANS, ROBERT T&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=430870064008>
+ -- Serial Number: (43:087:0064)
+ -- Property Address:   1530 N 2260 WEST - LEHI
+ -- Mailing Address:  1530 N 2260 W LEHI, UT 84043-3040
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=75977&avYear=2014>
+ -- File Entry Number: (75977)
+ -- Links on file entry page: 10
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=WOOD, CHARLES M>
+ -- Grantee Name: (WOOD, CHARLES M)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=WOOD, CHARLES M&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=431460240005>
+ -- Serial Number: (43:146:0240)
+ -- Property Address:   514 S 2970 WEST - LEHI
+ -- Mailing Address:  514 S 2970 W LEHI, UT 84043-5639
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76148&avYear=2014>
+ -- File Entry Number: (76148)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=CIMARUSTI, TINA SWALM>
+ -- Grantee Name: (CIMARUSTI, TINA SWALM)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=CIMARUSTI, TINA SWALM&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/Index.asp>
+ -- Serial Number: (Main Menu)
+*** ERROR *** Serial Number Page not available for that name
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76195&avYear=2014>
+ -- File Entry Number: (76195)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=WINEGAR, TENNILLE>
+ -- Grantee Name: (WINEGAR, TENNILLE)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=WINEGAR, TENNILLE&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/Index.asp>
+ -- Serial Number: (Main Menu)
+*** ERROR *** Serial Number Page not available for that name
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76395&avYear=2014>
+ -- File Entry Number: (76395)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=GARDNER, DANIEL>
+ -- Grantee Name: (GARDNER, DANIEL)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=GARDNER, DANIEL&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=496680009005>
+ -- Serial Number: (49:668:0009)
+ -- Property Address:   601 E 60 SOUTH - AMERICAN FORK
+ -- Mailing Address:  601 E 60 S AMERICAN FORK, UT 84003-2862
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76509&avYear=2014>
+ -- File Entry Number: (76509)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=HOWARD, JOSEPH L>
+ -- Grantee Name: (HOWARD, JOSEPH L)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=HOWARD, JOSEPH L&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=431890002002>
+ -- Serial Number: (43:189:0002)
+ -- Property Address:   522 W 1150 SOUTH - PAYSON
+ -- Mailing Address:  585 S 1200 E PAYSON, UT 84651-8532
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76584&avYear=2014>
+ -- File Entry Number: (76584)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=RAY, DAVID E>
+ -- Grantee Name: (RAY, DAVID E)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=RAY, DAVID E&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=530670004012>
+ -- Serial Number: (53:067:0004)
+ -- Property Address:   420 S 1600 EAST - PLEASANT GROVE
+ -- Mailing Address:  420 S 1660 E PLEASANT GROVE, UT 84062-3474
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76630&avYear=2014>
+ -- File Entry Number: (76630)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=COOPER, HOLLY>
+ -- Grantee Name: (COOPER, HOLLY)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=COOPER, HOLLY&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=10810027007>
+ -- Serial Number: (01:081:0027)
+ -- Property Address:   7 E 600 NORTH - LEHI
+ -- Mailing Address:  7 E 600 N LEHI, UT 84043-1668
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76796&avYear=2014>
+ -- File Entry Number: (76796)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=DAVIS, ATENAS>
+ -- Grantee Name: (DAVIS, ATENAS)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=DAVIS, ATENAS&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=441810447004>
+ -- Serial Number: (44:181:0447)
+ -- Property Address:   6962 N KIOWA PKY - EAGLE MOUNTAIN
+ -- Mailing Address:  6962 N KIOWA PKY EAGLE MOUNTAIN, UT 84005
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=76800&avYear=2014>
+ -- File Entry Number: (76800)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=GOUT, ROGER D>
+ -- Grantee Name: (GOUT, ROGER D)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=GOUT, ROGER D&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=90690028003>
+ -- Serial Number: (09:069:0028)
+ -- Property Address:   15 E 100 SOUTH - SANTAQUIN
+ -- Mailing Address:  15 E 100 S SANTAQUIN, UT 84655-8001
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77066&avYear=2014>
+ -- File Entry Number: (77066)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=SEQUOIA MOTORSPORTS LLC>
+ -- Grantee Name: (SEQUOIA MOTORSPORTS LLC)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=SEQUOIA MOTORSPORTS LLC&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=300010089002>
+ -- Serial Number: (30:001:0089)
+ -- Property Address:   523 N STATE RD - SALEM 
+ -- Mailing Address:  319 W SALEM CANAL RD SALEM, UT 84653-9302
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77069&avYear=2014>
+ -- File Entry Number: (77069)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=SEQUOIA MOTORSPORTS LLC>
+ -- Grantee Name: (SEQUOIA MOTORSPORTS LLC)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=SEQUOIA MOTORSPORTS LLC&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=300010089002>
+ -- Serial Number: (30:001:0089)
+ -- Property Address:   523 N STATE RD - SALEM 
+ -- Mailing Address:  319 W SALEM CANAL RD SALEM, UT 84653-9302
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77072&avYear=2014>
+ -- File Entry Number: (77072)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=SEQUOIA MOTORSPORTS LLC>
+ -- Grantee Name: (SEQUOIA MOTORSPORTS LLC)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=SEQUOIA MOTORSPORTS LLC&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=300010089002>
+ -- Serial Number: (30:001:0089)
+ -- Property Address:   523 N STATE RD - SALEM 
+ -- Mailing Address:  319 W SALEM CANAL RD SALEM, UT 84653-9302
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77336&avYear=2014>
+ -- File Entry Number: (77336)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=FRISBEE, JEANE L>
+ -- Grantee Name: (FRISBEE, JEANE L)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=FRISBEE, JEANE L&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=30190014004>
+ -- Serial Number: (03:019:0014)
+ -- Property Address:   240 S 100 EAST - PLEASANT GROVE 
+ -- Mailing Address:  246 S 100 E PLEASANT GROVE, UT 84062-2706
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77472&avYear=2014>
+ -- File Entry Number: (77472)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=JOHNSON, AUNDRA L>
+ -- Grantee Name: (JOHNSON, AUNDRA L)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=JOHNSON, AUNDRA L&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=465310002003>
+ -- Serial Number: (46:531:0002)
+ -- Property Address:   1356 N 400 EAST - MAPLETON
+ -- Mailing Address:  1356 N 400 E MAPLETON, UT 84664-3813
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77473&avYear=2014>
+ -- File Entry Number: (77473)
+ -- Links on file entry page: 8
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=SILVA, MARICEL>
+ -- Grantee Name: (SILVA, MARICEL)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=SILVA, MARICEL&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=410850020013>
+ -- Serial Number: (41:085:0020)
+ -- Property Address:   1701 N 400 EAST - OREM
+ -- Mailing Address:  1701 N 400 E OREM, UT 84097-2238
+++++++ URL of file entry number page: <http://www.utahcounty.gov/LandRecords/document.asp?avEntry=77474&avYear=2014>
+ -- File Entry Number: (77474)
+ -- Links on file entry page: 9
+ -- URL of grantee name page: <http://www.utahcounty.gov/LandRecords/PartyName.asp?avname=ARMSTRONG, RUSSELL J>
+ -- Grantee Name: (ARMSTRONG, RUSSELL J)
+ -- URL of name search page: <http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name=ARMSTRONG, RUSSELL J&av_valid=...&Submit=Search>
+ -- Links on completed name search page: 1
+ -- URL of serial number page for entry: <http://www.utahcounty.gov/LandRecords/property.asp?av_serial=210250037006>
+ -- Serial Number: (21:025:0037)
+ -- Property Address:   169 N 2400 WEST - PROVO
+ -- Mailing Address:  169 N 2400 W PROVO, UT 84601-2243
+----> END OF DATA
