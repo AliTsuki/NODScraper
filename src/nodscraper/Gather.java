@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
+import java.security.CodeSource;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -26,8 +28,13 @@ public class Gather{
 	
 	public static int collect(String MM, String DD, String YYYY){
 		try{
-			String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();	//get the location of the JAR for use below
-			String decodedPath = URLDecoder.decode(path, "UTF-8");	//decode the path of JAR
+			//String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();	//get the location of the JAR for use below
+			//String decodedPath = URLDecoder.decode(path, "UTF-8");	//decode the path of JAR
+			//decodedPath = removeLastChar(decodedPath);	//remove the name of the jar from directory, LOL, i iz dum
+			CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
+			File jarFile = new File(codeSource.getLocation().toURI().getPath());
+			String jarDir = jarFile.getParentFile().getPath();
+			jarDir = jarDir+"/";
 			Date date = new Date();	//get date for use below
 			Calendar cal = Calendar.getInstance();	//get date as calendar for below
 			cal.setTime(date);	//set calendar time to date
@@ -38,8 +45,8 @@ public class Gather{
 			int minutes = cal.get(Calendar.MINUTE);	//get current minute
 			int seconds = cal.get(Calendar.SECOND);	//get current seconds
 			String stringDateExecuted = (month+"."+day+"."+year+"-"+hour+"."+minutes+"."+seconds);	//put all the current date data into a string for naming files
-			String sFileName = (decodedPath+"DATA/"+MM+"."+DD+"."+YYYY+"--"+stringDateExecuted);	//set file name to date looked up and date app ran
-			File dirDATA = new File(decodedPath+"DATA/");	//create the bones for a new directory for DATA
+			String sFileName = (jarDir+"DATA/"+MM+"."+DD+"."+YYYY+"--"+stringDateExecuted);	//set file name to date looked up and date app ran
+			File dirDATA = new File(jarDir+"DATA/");	//create the bones for a new directory for DATA
 			if (!dirDATA.exists()){	//check if directory already exists, if not do below
 				System.out.println("creating directory: " + dirDATA + "\n");	//print to console to affirm creation of directory
 			    boolean result = false;	//starting value
@@ -52,7 +59,7 @@ public class Gather{
 			       System.out.println("DIR created\n");	//print to console to affirm completion of directory creation
 			     }//end of if statement
 			}//end of if statement
-			File dirLOGS = new File(decodedPath+"LOGS/");	//create the bones for a new directory for LOGS
+			File dirLOGS = new File(jarDir+"LOGS/");	//create the bones for a new directory for LOGS
 			if (!dirLOGS.exists()){	//check if directory already exists, if not do below
 				System.out.println("creating directory: " + dirLOGS + "\n");	//print to console to affirm creation of directory
 				boolean result = false;	//starting value
@@ -69,7 +76,7 @@ public class Gather{
 			FileWriter writer = new FileWriter(sFileName+".csv");	//set up writer for CSV file
 			File fileCSV = new File(sFileName+".csv");	//set up the bones for the CSV file
 			if(!fileCSV.exists()) fileCSV.createNewFile();	//if CSV file doesn't exist, it shouldn't, then create it
-			FileOutputStream fileLOG = new FileOutputStream(decodedPath+"/LOGS/log.txt");	//set up stream to capture console to log
+			FileOutputStream fileLOG = new FileOutputStream(jarDir+"/LOGS/log.txt");	//set up stream to capture console to log
 		    NODPrintStream NOD = new NODPrintStream(fileLOG, System.out);	//set up console logging
 		    System.setOut(NOD);	//set up console logging
 		    writer.append("Tax ID");	//setting up row names of CSV file
@@ -132,15 +139,19 @@ public class Gather{
 									String stringPropertyAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(3) > td > strong").first().nextSibling()).text();	//grab property address
 									String stringMailingAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(4) > td > strong").first().nextSibling()).text();	//grab mailing address
 									System.out.printf(" -- Property Address: %s\n -- Mailing Address: %s\n", stringPropertyAddress, stringMailingAddress);	//print out addresses
+									stringSerialNumber = stringSerialNumber.trim();
 									if (stringSerialNumber != null) writer.append(stringSerialNumber);	//write to CSV the different datas, if it is null, make us aware
 									else writer.append("NO TAX ID PROVIDED");
 									writer.append(';');
+									stringGranteeName = stringGranteeName.trim();
 									if (stringGranteeName != null) writer.append(stringGranteeName);
 									else writer.append("NO GRANTEE NAME PROVIDED");
 									writer.append(';');
+									stringPropertyAddress = stringPropertyAddress.trim();
 									if (stringPropertyAddress != null) writer.append(stringPropertyAddress);
 									else writer.append("NO PROPERTY ADDRESS PROVIDED");
 									writer.append(';');
+									stringMailingAddress = stringMailingAddress.trim();
 									if (stringMailingAddress != null) writer.append(stringMailingAddress);
 									else writer.append("NO MAILING ADDRESS PROVIDED");
 									writer.append('\n');
@@ -161,11 +172,10 @@ public class Gather{
 			}//end of try statement
 			catch(IOException e){e.printStackTrace();}	//the usual
 		}//end of try statement
-		catch (IOException e){e.printStackTrace();}	//the usual
+		catch (IOException | URISyntaxException e){e.printStackTrace();}	//the usual
 		return returnInt;	//return the results int for the method
 	}//end of collect method
 
-	
 	private static void print(String msg, Object... args){
 		System.out.println(String.format(msg,  args));	//useful method for printing to console for debugging
 	}//end of print method
