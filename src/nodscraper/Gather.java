@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,9 +27,8 @@ public class Gather{
 	
 	public static int collect(String MM, String DD, String YYYY){
 		try{
-			//String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();	//get the location of the JAR for use below
-			//String decodedPath = URLDecoder.decode(path, "UTF-8");	//decode the path of JAR
-			//decodedPath = removeLastChar(decodedPath);	//remove the name of the jar from directory, LOL, i iz dum
+			print("NOD Scraper version: "+Main.versionNumber);
+			print("for Support, contact Ali M <photonphighter@gmail.com>");
 			CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
 			File jarFile = new File(codeSource.getLocation().toURI().getPath());
 			String jarDir = jarFile.getParentFile().getPath();
@@ -76,7 +74,7 @@ public class Gather{
 			FileWriter writer = new FileWriter(sFileName+".csv");	//set up writer for CSV file
 			File fileCSV = new File(sFileName+".csv");	//set up the bones for the CSV file
 			if(!fileCSV.exists()) fileCSV.createNewFile();	//if CSV file doesn't exist, it shouldn't, then create it
-			FileOutputStream fileLOG = new FileOutputStream(jarDir+"/LOGS/log.txt");	//set up stream to capture console to log
+			FileOutputStream fileLOG = new FileOutputStream(jarDir+"/LOGS/log-ver"+Main.versionNumber+"-"+month+"."+day+"."+year+"."+minutes+"."+seconds+".txt");	//set up stream to capture console to log
 		    NODPrintStream NOD = new NODPrintStream(fileLOG, System.out);	//set up console logging
 		    System.setOut(NOD);	//set up console logging
 		    writer.append("Tax ID");	//setting up row names of CSV file
@@ -92,14 +90,18 @@ public class Gather{
 			try{
 				try{
 					Connection conn = Jsoup.connect(stringURLofStartSearchPage);	//set up connection
-					conn.timeout(12000);	//generous timeout length
+					conn.timeout(120000);	//generous timeout length
 					Document documentUponCompletedSearchPageData = conn.get();	//connect to URL
 					Elements linksFromDocumentUponCompletedSearchPageData = documentUponCompletedSearchPageData.select("a[href]");	//get all the links in the current document and put them in a list
+					print("Total Links on Page before scrub: " + linksFromDocumentUponCompletedSearchPageData.size());
 					linksFromDocumentUponCompletedSearchPageData.remove(0);	//remove first link, as it is superfluous
 					for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are superfluous
 						linksFromDocumentUponCompletedSearchPageData.remove(linksFromDocumentUponCompletedSearchPageData.size()-1);	//just said it, right there above
 					}//end of for loop
 					print("---->Number of total records from date forward: " + linksFromDocumentUponCompletedSearchPageData.size()+"\n");	//print how many links are left in the list from completed search
+					if (linksFromDocumentUponCompletedSearchPageData.size() >= 100){
+						//need to fix if searching over 100 records
+					}//end of if statement
 					for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
 						String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
 						String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
@@ -122,6 +124,7 @@ public class Gather{
 							String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search
 							Document documentCompletedNameSearchResultsPageData = Jsoup.connect(stringURLOfNameSearchPage).get();	//connect to the URL for specific name search
 							Elements linksFromCompletedNameSearchResultsPageData = documentCompletedNameSearchResultsPageData.select("a[href]");	//collect all links on the specified URL
+							print(" -- Links on completed name search page before scrub: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
 							linksFromCompletedNameSearchResultsPageData.remove(0);	//remove first result, as it is superfluous
 							for (int i=linksFromCompletedNameSearchResultsPageData.size(); i>1; i--){	//remove superfluous links on page from list
 								linksFromCompletedNameSearchResultsPageData.remove(linksFromCompletedNameSearchResultsPageData.size()-1);
@@ -162,7 +165,7 @@ public class Gather{
 							}//end of nested for loop
 						}//end of nested for loop
 					}//end of for loop
-					System.out.println("\n----> END OF DATA");	//print end of data disclosure for logs
+					System.out.println("\n----> END OF DATA STREAM");	//print end of data disclosure for logs
 					writer.close();	//close up the writer to terminate
 				}//end of try statement
 				catch (SocketTimeoutException e){

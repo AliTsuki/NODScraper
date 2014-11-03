@@ -21,8 +21,8 @@ public class GUI extends JFrame implements ActionListener{
 	static int day = cal.get(Calendar.DAY_OF_MONTH);	//get current day
 	static int year = cal.get(Calendar.YEAR);	//get current year
 	//set up all the objects for the GUI below
-	static JFrame f = new JFrame("NOD Scraper");
-	static JLabel mainLabel = new JLabel("Enter Date to search(MM/DD/YYYY):");
+	static JFrame f = new JFrame("NOD Scraper " + Main.versionNumber);
+	static JLabel mainLabel = new JLabel("Enter Date to search in format(MM/DD/YYYY):");
 	static JTextField tMM = new JTextField(""+month, 3);
 	static JTextField tDD = new JTextField(""+day, 3);
 	static JTextField tYYYY = new JTextField(""+year, 5);
@@ -37,8 +37,14 @@ public class GUI extends JFrame implements ActionListener{
 	public static void draw(){
 		tMM.setDocument(new LengthRestrictedDocument(2));	//call method to keep length of input to a limit
 		tMM.setText(""+month);	//set text to current month
+		if (tMM.getText().length() == 1){
+			tMM.setText("0"+month);	//make sure there's a zero in front of numbers if it is single digit month
+		}//end of if statement
 		tDD.setDocument(new LengthRestrictedDocument(2));	//call method to keep length of input to a limit
 		tDD.setText(""+day);	//set text to current day
+		if (tDD.getText().length() == 1){
+			tDD.setText("0"+day);	//make sure there's a zero in front of numbers if it is single digit day
+		}//end of if statement
 		tYYYY.setDocument(new LengthRestrictedDocument(4));	//call method to keep length of input to a limit
 		tYYYY.setText(""+year);	//set text to current year
 		f.getContentPane().setLayout(new FlowLayout());	//setup initial layout
@@ -54,7 +60,7 @@ public class GUI extends JFrame implements ActionListener{
 		f.pack();
 		//end of GUI objects additions
 		f.setVisible(true);	//self explanatory...
-		f.setSize(450, 200);	//this too
+		f.setSize(500, 200);	//this too
 		f.setResizable(false);	//also this
 		f.setLocationRelativeTo(null);	//puts screen in center
 		f.setDefaultCloseOperation(EXIT_ON_CLOSE);	//terminate app upon pane closure
@@ -68,7 +74,7 @@ public class GUI extends JFrame implements ActionListener{
 		int intMM = Integer.parseInt(MM);	//grab int value for month, for below
 		int intDD = Integer.parseInt(DD);	//grab int value for day, for below
 		int intYYYY = Integer.parseInt(YYYY);	//grab int value for year, for below
-		if(MM.length() == 2 && DD.length() == 2 && YYYY.length() == 4 && intMM < 13 && intDD < 32 && intYYYY > 2013){	//check values to make sure they are valid
+		if(MM.length() == 2 && DD.length() == 2 && YYYY.length() == 4 && intMM < 13 && intDD < 32 && intYYYY > 2000 && intMM > 0 && intDD > 0){	//check values to make sure they are valid
 			if ((intYYYY == year && intMM <= month && intDD <= day) || (intYYYY < year)){	//same as above
 				if (isValidDate(YYYY+MM+DD) == true){	//same as above
 					try{
