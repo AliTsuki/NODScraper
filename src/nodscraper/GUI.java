@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,7 +14,6 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener{
 	
-	Date date = new Date();	//get date for use below
 	static Calendar cal = Calendar.getInstance();	//get date as calendar for below
 	static int month = cal.get(Calendar.MONTH)+1;	//get current month, add 1 because calendar starts at 0 in java
 	static int day = cal.get(Calendar.DAY_OF_MONTH);	//get current day
@@ -74,27 +72,22 @@ public class GUI extends JFrame implements ActionListener{
 		int intMM = Integer.parseInt(MM);	//grab int value for month, for below
 		int intDD = Integer.parseInt(DD);	//grab int value for day, for below
 		int intYYYY = Integer.parseInt(YYYY);	//grab int value for year, for below
-		if(MM.length() == 2 && DD.length() == 2 && YYYY.length() == 4 && intMM < 13 && intDD < 32 && intYYYY > 2000 && intMM > 0 && intDD > 0){	//check values to make sure they are valid
-			if ((intYYYY == year && intMM <= month && intDD <= day) || (intYYYY < year)){	//same as above
-				if (isValidDate(YYYY+MM+DD) == true){	//same as above
-					try{
-						int results = Gather.collect(MM, DD, YYYY);	//gather results and return results number
-						errorLabel.setText("Completed, check DATA folder. Results: "+results);	//notify of completion and number of results
+		if ((intYYYY == year && intMM < month) || (intYYYY < year) || (intYYYY == year && intMM == month && intDD <= day)){	//same as above
+			if (isValidDate(YYYY+MM+DD) == true){	//same as above
+				try{
+					int results = Gather.collect(MM, DD, YYYY);	//gather results and return results number
+					errorLabel.setText("Completed, check DATA folder. Results: "+results);	//notify of completion and number of results
 					}//end of try statement
 					catch (Exception e){
 						e.printStackTrace();	//the usual
 					}//end of catch statement
-				}//end of if statement
-				else{
-					errorLabel.setText("INVALID DATE");	//put in a correct date dummy!
-				}//end of else statement
 			}//end of if statement
 			else{
-				errorLabel.setText("INVALID DATE");	//same
+				errorLabel.setText("INVALID DATE SELECTION");	//put in a correct date dummy!
 			}//end of else statement
 		}//end of if statement
 		else{
-			errorLabel.setText("INVALID DATE");	//same
+			errorLabel.setText("CANNOT SEARCH FUTURE DATE");	//same
 		}//end of else statement
 	}//end of actionPerformed method
 	

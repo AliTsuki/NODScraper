@@ -27,8 +27,8 @@ public class Gather{
 	
 	public static int collect(String MM, String DD, String YYYY){
 		try{
-			print("NOD Scraper version: "+Main.versionNumber);
-			print("for Support, contact Ali M <photonphighter@gmail.com>");
+			System.out.println("NOD Scraper version: "+Main.versionNumber);
+			System.out.println("for Support, contact Ali M <photonphighter@gmail.com>");
 			CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
 			File jarFile = new File(codeSource.getLocation().toURI().getPath());
 			String jarDir = jarFile.getParentFile().getPath();
@@ -86,87 +86,155 @@ public class Gather{
 			writer.append("Mailing Address");
 			writer.append('\n');	//rows complete
 			String stringURLofStartSearchPage = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-			print("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...\n", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
+			System.out.printf("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...\n", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
 			try{
 				try{
 					Connection conn = Jsoup.connect(stringURLofStartSearchPage);	//set up connection
 					conn.timeout(120000);	//generous timeout length
 					Document documentUponCompletedSearchPageData = conn.get();	//connect to URL
 					Elements linksFromDocumentUponCompletedSearchPageData = documentUponCompletedSearchPageData.select("a[href]");	//get all the links in the current document and put them in a list
-					print("Total Links on Page before scrub: " + linksFromDocumentUponCompletedSearchPageData.size());
+					System.out.println("Total Links on Page before scrub: " + linksFromDocumentUponCompletedSearchPageData.size());
 					linksFromDocumentUponCompletedSearchPageData.remove(0);	//remove first link, as it is superfluous
 					for (int i=0; i<4; i++){	//iterate to remove the bottom 4 links, as they are superfluous
 						linksFromDocumentUponCompletedSearchPageData.remove(linksFromDocumentUponCompletedSearchPageData.size()-1);	//just said it, right there above
 					}//end of for loop
-					print("---->Number of total records from date forward: " + linksFromDocumentUponCompletedSearchPageData.size()+"\n");	//print how many links are left in the list from completed search
-					if (linksFromDocumentUponCompletedSearchPageData.size() >= 100){
-						//need to fix if searching over 100 records
-					}//end of if statement
-					for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
-						String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
-						String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
-						print("++++++ URL of file entry number page: <%s>", stringURLOfFileEntryNumberLinkOnPage);	//ignore, for debugging
-						print(" -- File Entry Number: (%s)", stringFileEntryNumber);	//print out the gathered entry number
-						Document documentEntryNumberPageData = Jsoup.connect(stringURLOfFileEntryNumberLinkOnPage).get();	//connect to the URL for the entry number's page, to get the name
-						Elements linksFromEntryNumberPageData = documentEntryNumberPageData.select("a[href]");	//get all the links listed on entry number page
-						print(" -- Links on file entry page: " + linksFromEntryNumberPageData.size());	//ignore, for debugging
-						linksFromEntryNumberPageData.remove(0);	//remove first link as it is superfluous
-						linksFromEntryNumberPageData.remove(0);	//remove second link as it is superfluous
-						for (int i=linksFromEntryNumberPageData.size(); i>1; i--){	//iterate through the links and remove all the superfluous ones left at bottom of list
-							linksFromEntryNumberPageData.remove(linksFromEntryNumberPageData.size()-1);	//yep
-						}//end of nested for loop
-						String stringURLOfGranteeNamePage = linksFromEntryNumberPageData.attr("abs:href");	//get the URL containing the grantee's name
-						String stringGranteeName = trim(linksFromEntryNumberPageData.text(), 35);	//get the actual name out of the link
-						for (Element link2 : linksFromEntryNumberPageData){	//for all the links left, do below
-							stringURLOfGranteeNamePage = link2.attr("abs:href");	//collect URL containing grantee name
-							print(" -- URL of grantee name page: <%s>", stringURLOfGranteeNamePage);	//ignore, for debugging
-							print(" -- Grantee Name: (%s)", stringGranteeName);	//print the Grantee's name, going to use it for search later
-							String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search
-							Document documentCompletedNameSearchResultsPageData = Jsoup.connect(stringURLOfNameSearchPage).get();	//connect to the URL for specific name search
-							Elements linksFromCompletedNameSearchResultsPageData = documentCompletedNameSearchResultsPageData.select("a[href]");	//collect all links on the specified URL
-							print(" -- Links on completed name search page before scrub: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
-							linksFromCompletedNameSearchResultsPageData.remove(0);	//remove first result, as it is superfluous
-							for (int i=linksFromCompletedNameSearchResultsPageData.size(); i>1; i--){	//remove superfluous links on page from list
-								linksFromCompletedNameSearchResultsPageData.remove(linksFromCompletedNameSearchResultsPageData.size()-1);
+					System.out.println("---->Number of total records from date forward: " + linksFromDocumentUponCompletedSearchPageData.size()+"\n");	//print how many links are left in the list from completed search
+					if (linksFromDocumentUponCompletedSearchPageData.size() > 100){	//instructions if there are more than 100 records
+						for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
+							String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
+							String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
+							System.out.println("++++++ URL of file entry number page: "+stringURLOfFileEntryNumberLinkOnPage);	//ignore, for debugging
+							System.out.println(" -- File Entry Number: "+stringFileEntryNumber);	//print out the gathered entry number
+							Document documentEntryNumberPageData = Jsoup.connect(stringURLOfFileEntryNumberLinkOnPage).get();	//connect to the URL for the entry number's page, to get the name
+							Elements linksFromEntryNumberPageData = documentEntryNumberPageData.select("a[href]");	//get all the links listed on entry number page
+							System.out.println(" -- Links on file entry page: " + linksFromEntryNumberPageData.size());	//ignore, for debugging
+							linksFromEntryNumberPageData.remove(0);	//remove first link as it is superfluous
+							linksFromEntryNumberPageData.remove(0);	//remove second link as it is superfluous
+							for (int i=linksFromEntryNumberPageData.size(); i>1; i--){	//iterate through the links and remove all the superfluous ones left at bottom of list
+								linksFromEntryNumberPageData.remove(linksFromEntryNumberPageData.size()-1);	//yep
 							}//end of nested for loop
-							for (Element link3 : linksFromCompletedNameSearchResultsPageData){	//for all the links left, do below
-								String stringURLOfSerialNumberPage = link3.attr("abs:href");	//collect serial number URL
-								String stringSerialNumber = trim(link3.text(), 35);	//collect serial number
-								print(" -- URL of name search page: <%s>", stringURLOfNameSearchPage);	//ignore, for debugging
-								print(" -- Links on completed name search page: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
-								print(" -- URL of serial number page for entry: <%s>", stringURLOfSerialNumberPage);	//ignore, for debugging
-								print(" -- Serial Number: (%s)", stringSerialNumber);	//ignore, for debugging
-								if (stringURLOfSerialNumberPage.length() > 50){	//make sure that the serial number URL is a correct URL by checking length is in normal range
-									Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
-									Elements innerTable = documentSerialNumberPageData.select("body > table:nth-child(2) > tbody > tr > td > table > tbody > tr > td > table:nth-child(2)");	//select the correct tables of data
-									String stringPropertyAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(3) > td > strong").first().nextSibling()).text();	//grab property address
-									String stringMailingAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(4) > td > strong").first().nextSibling()).text();	//grab mailing address
-									System.out.printf(" -- Property Address: %s\n -- Mailing Address: %s\n", stringPropertyAddress, stringMailingAddress);	//print out addresses
-									stringSerialNumber = stringSerialNumber.trim();
-									if (stringSerialNumber != null) writer.append(stringSerialNumber);	//write to CSV the different datas, if it is null, make us aware
-									else writer.append("NO TAX ID PROVIDED");
-									writer.append(';');
-									stringGranteeName = stringGranteeName.trim();
-									if (stringGranteeName != null) writer.append(stringGranteeName);
-									else writer.append("NO GRANTEE NAME PROVIDED");
-									writer.append(';');
-									stringPropertyAddress = stringPropertyAddress.trim();
-									if (stringPropertyAddress != null) writer.append(stringPropertyAddress);
-									else writer.append("NO PROPERTY ADDRESS PROVIDED");
-									writer.append(';');
-									stringMailingAddress = stringMailingAddress.trim();
-									if (stringMailingAddress != null) writer.append(stringMailingAddress);
-									else writer.append("NO MAILING ADDRESS PROVIDED");
-									writer.append('\n');
-									writer.flush();	//flush the writer after each iteration to keep it from crashing
-									returnInt = linksFromDocumentUponCompletedSearchPageData.size();	//set return value to number of results processed
-								}//end of if statement
-								else print("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
+							String stringURLOfGranteeNamePage = linksFromEntryNumberPageData.attr("abs:href");	//get the URL containing the grantee's name
+							String stringGranteeName = trim(linksFromEntryNumberPageData.text(), 35);	//get the actual name out of the link
+							for (Element link2 : linksFromEntryNumberPageData){	//for all the links left, do below
+								stringURLOfGranteeNamePage = link2.attr("abs:href");	//collect URL containing grantee name
+								System.out.println(" -- URL of grantee name page: "+stringURLOfGranteeNamePage);	//ignore, for debugging
+								System.out.println(" -- Grantee Name: "+stringGranteeName);	//print the Grantee's name, going to use it for search later
+								String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search
+								Document documentCompletedNameSearchResultsPageData = Jsoup.connect(stringURLOfNameSearchPage).get();	//connect to the URL for specific name search
+								Elements linksFromCompletedNameSearchResultsPageData = documentCompletedNameSearchResultsPageData.select("a[href]");	//collect all links on the specified URL
+								System.out.println(" -- Links on completed name search page before scrub: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
+								linksFromCompletedNameSearchResultsPageData.remove(0);	//remove first result, as it is superfluous
+								for (int i=linksFromCompletedNameSearchResultsPageData.size(); i>1; i--){	//remove superfluous links on page from list
+									linksFromCompletedNameSearchResultsPageData.remove(linksFromCompletedNameSearchResultsPageData.size()-1);
+								}//end of nested for loop
+								for (Element link3 : linksFromCompletedNameSearchResultsPageData){	//for all the links left, do below
+									String stringURLOfSerialNumberPage = link3.attr("abs:href");	//collect serial number URL
+									String stringSerialNumber = trim(link3.text(), 35);	//collect serial number
+									System.out.println(" -- URL of name search page: "+stringURLOfNameSearchPage);	//ignore, for debugging
+									System.out.println(" -- Links on completed name search page: "+linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
+									System.out.println(" -- URL of serial number page for entry: "+stringURLOfSerialNumberPage);	//ignore, for debugging
+									System.out.println(" -- Serial Number: "+stringSerialNumber);	//ignore, for debugging
+									if (stringURLOfSerialNumberPage.length() > 50){	//make sure that the serial number URL is a correct URL by checking length is in normal range
+										Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
+										Elements innerTable = documentSerialNumberPageData.select("body > table:nth-child(2) > tbody > tr > td > table > tbody > tr > td > table:nth-child(2)");	//select the correct tables of data
+										String stringPropertyAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(3) > td > strong").first().nextSibling()).text();	//grab property address
+										String stringMailingAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(4) > td > strong").first().nextSibling()).text();	//grab mailing address
+										System.out.println(" -- Property Address: "+stringPropertyAddress);
+										System.out.println(" -- Mailing Address: "+stringMailingAddress+"\n");	//print out addresses
+										stringSerialNumber = stringSerialNumber.trim();
+										if (stringSerialNumber != null) writer.append(stringSerialNumber);	//write to CSV the different datas, if it is null, make us aware
+										else writer.append("NO TAX ID PROVIDED");
+										writer.append(';');
+										stringGranteeName = stringGranteeName.trim();
+										if (stringGranteeName != null) writer.append(stringGranteeName);
+										else writer.append("NO GRANTEE NAME PROVIDED");
+										writer.append(';');
+										stringPropertyAddress = stringPropertyAddress.trim();
+										if (stringPropertyAddress != null) writer.append(stringPropertyAddress);
+										else writer.append("NO PROPERTY ADDRESS PROVIDED");
+										writer.append(';');
+										stringMailingAddress = stringMailingAddress.trim();
+										if (stringMailingAddress != null) writer.append(stringMailingAddress);
+										else writer.append("NO MAILING ADDRESS PROVIDED");
+										writer.append('\n');
+										writer.flush();	//flush the writer after each iteration to keep it from crashing
+										returnInt = linksFromDocumentUponCompletedSearchPageData.size();	//set return value to number of results processed
+									}//end of if statement
+									else System.out.println("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
+								}//end of nested for loop
 							}//end of nested for loop
-						}//end of nested for loop
-					}//end of for loop
+						}//end of for loop
 					System.out.println("\n----> END OF DATA STREAM");	//print end of data disclosure for logs
 					writer.close();	//close up the writer to terminate
+					}//end of if statement
+					else{	//if there are less than 100 records, do below
+						for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
+							String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
+							String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
+							System.out.println("++++++ URL of file entry number page: "+stringURLOfFileEntryNumberLinkOnPage);	//ignore, for debugging
+							System.out.println(" -- File Entry Number: "+stringFileEntryNumber);	//print out the gathered entry number
+							Document documentEntryNumberPageData = Jsoup.connect(stringURLOfFileEntryNumberLinkOnPage).get();	//connect to the URL for the entry number's page, to get the name
+							Elements linksFromEntryNumberPageData = documentEntryNumberPageData.select("a[href]");	//get all the links listed on entry number page
+							System.out.println(" -- Links on file entry page: " + linksFromEntryNumberPageData.size());	//ignore, for debugging
+							linksFromEntryNumberPageData.remove(0);	//remove first link as it is superfluous
+							linksFromEntryNumberPageData.remove(0);	//remove second link as it is superfluous
+							for (int i=linksFromEntryNumberPageData.size(); i>1; i--){	//iterate through the links and remove all the superfluous ones left at bottom of list
+								linksFromEntryNumberPageData.remove(linksFromEntryNumberPageData.size()-1);	//yep
+							}//end of nested for loop
+							String stringURLOfGranteeNamePage = linksFromEntryNumberPageData.attr("abs:href");	//get the URL containing the grantee's name
+							String stringGranteeName = trim(linksFromEntryNumberPageData.text(), 35);	//get the actual name out of the link
+							for (Element link2 : linksFromEntryNumberPageData){	//for all the links left, do below
+								stringURLOfGranteeNamePage = link2.attr("abs:href");	//collect URL containing grantee name
+								System.out.println(" -- URL of grantee name page: "+stringURLOfGranteeNamePage);	//ignore, for debugging
+								System.out.println(" -- Grantee Name: "+stringGranteeName);	//print the Grantee's name, going to use it for search later
+								String stringURLOfNameSearchPage = "http://www.utahcounty.gov/LandRecords/NameSearch.asp?av_name="+stringGranteeName+"&av_valid=...&Submit=Search";	//URL to use in name search
+								Document documentCompletedNameSearchResultsPageData = Jsoup.connect(stringURLOfNameSearchPage).get();	//connect to the URL for specific name search
+								Elements linksFromCompletedNameSearchResultsPageData = documentCompletedNameSearchResultsPageData.select("a[href]");	//collect all links on the specified URL
+								System.out.println(" -- Links on completed name search page before scrub: " + linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
+								linksFromCompletedNameSearchResultsPageData.remove(0);	//remove first result, as it is superfluous
+								for (int i=linksFromCompletedNameSearchResultsPageData.size(); i>1; i--){	//remove superfluous links on page from list
+									linksFromCompletedNameSearchResultsPageData.remove(linksFromCompletedNameSearchResultsPageData.size()-1);
+								}//end of nested for loop
+								for (Element link3 : linksFromCompletedNameSearchResultsPageData){	//for all the links left, do below
+									String stringURLOfSerialNumberPage = link3.attr("abs:href");	//collect serial number URL
+									String stringSerialNumber = trim(link3.text(), 35);	//collect serial number
+									System.out.println(" -- URL of name search page: "+stringURLOfNameSearchPage);	//ignore, for debugging
+									System.out.println(" -- Links on completed name search page: "+linksFromCompletedNameSearchResultsPageData.size());	//ignore, for debugging
+									System.out.println(" -- URL of serial number page for entry: "+stringURLOfSerialNumberPage);	//ignore, for debugging
+									System.out.println(" -- Serial Number: "+stringSerialNumber);	//ignore, for debugging
+									if (stringURLOfSerialNumberPage.length() > 50){	//make sure that the serial number URL is a correct URL by checking length is in normal range
+										Document documentSerialNumberPageData = Jsoup.connect(stringURLOfSerialNumberPage).get();	//connect to serial number page
+										Elements innerTable = documentSerialNumberPageData.select("body > table:nth-child(2) > tbody > tr > td > table > tbody > tr > td > table:nth-child(2)");	//select the correct tables of data
+										String stringPropertyAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(3) > td > strong").first().nextSibling()).text();	//grab property address
+										String stringMailingAddress = ((org.jsoup.nodes.TextNode)innerTable.select("tr:nth-child(4) > td > strong").first().nextSibling()).text();	//grab mailing address
+										System.out.println(" -- Property Address: "+stringPropertyAddress);
+										System.out.println(" -- Mailing Address: "+stringMailingAddress+"\n");	//print out addresses
+										stringSerialNumber = stringSerialNumber.trim();
+										if (stringSerialNumber != null) writer.append(stringSerialNumber);	//write to CSV the different datas, if it is null, make us aware
+										else writer.append("NO TAX ID PROVIDED");
+										writer.append(';');
+										stringGranteeName = stringGranteeName.trim();
+										if (stringGranteeName != null) writer.append(stringGranteeName);
+										else writer.append("NO GRANTEE NAME PROVIDED");
+										writer.append(';');
+										stringPropertyAddress = stringPropertyAddress.trim();
+										if (stringPropertyAddress != null) writer.append(stringPropertyAddress);
+										else writer.append("NO PROPERTY ADDRESS PROVIDED");
+										writer.append(';');
+										stringMailingAddress = stringMailingAddress.trim();
+										if (stringMailingAddress != null) writer.append(stringMailingAddress);
+										else writer.append("NO MAILING ADDRESS PROVIDED");
+										writer.append('\n');
+										writer.flush();	//flush the writer after each iteration to keep it from crashing
+										returnInt = linksFromDocumentUponCompletedSearchPageData.size();	//set return value to number of results processed
+									}//end of if statement
+									else System.out.println("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
+								}//end of nested for loop
+							}//end of nested for loop
+						}//end of for loop
+					System.out.println("\n----> END OF DATA STREAM");	//print end of data disclosure for logs
+					writer.close();	//close up the writer to terminate
+					}//end of else statement
 				}//end of try statement
 				catch (SocketTimeoutException e){
 					e.printStackTrace();	//if there is a timeout, print stack trace
@@ -178,10 +246,6 @@ public class Gather{
 		catch (IOException | URISyntaxException e){e.printStackTrace();}	//the usual
 		return returnInt;	//return the results int for the method
 	}//end of collect method
-
-	private static void print(String msg, Object... args){
-		System.out.println(String.format(msg,  args));	//useful method for printing to console for debugging
-	}//end of print method
 	
 	private static String trim(String s, int width){
 		if (s.length() > width)
