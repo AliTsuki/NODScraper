@@ -27,8 +27,6 @@ public class Gather{
 	
 	public static int collect(String MM, String DD, String YYYY){
 		try{
-			System.out.println("NOD Scraper version: "+Main.versionNumber);
-			System.out.println("for Support, contact Ali M <photonphighter@gmail.com>");
 			CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
 			File jarFile = new File(codeSource.getLocation().toURI().getPath());
 			String jarDir = jarFile.getParentFile().getPath();
@@ -40,6 +38,7 @@ public class Gather{
 			int day = cal.get(Calendar.DAY_OF_MONTH);	//get current day
 			int year = cal.get(Calendar.YEAR);	//get current year
 			int hour = cal.get(Calendar.HOUR);	//get current hour
+			if (hour == 0) hour = 12;
 			int minutes = cal.get(Calendar.MINUTE);	//get current minute
 			int seconds = cal.get(Calendar.SECOND);	//get current seconds
 			String stringDateExecuted = (month+"."+day+"."+year+"-"+hour+"."+minutes+"."+seconds);	//put all the current date data into a string for naming files
@@ -70,13 +69,15 @@ public class Gather{
 					System.out.println("DIR created\n");	//print to console to affirm completion of directory creation
 				}//end of if statement
 			}//end of if statement
-			System.out.println(sFileName+"\n");	//print to console the file name for logging
 			FileWriter writer = new FileWriter(sFileName+".csv");	//set up writer for CSV file
 			File fileCSV = new File(sFileName+".csv");	//set up the bones for the CSV file
 			if(!fileCSV.exists()) fileCSV.createNewFile();	//if CSV file doesn't exist, it shouldn't, then create it
-			FileOutputStream fileLOG = new FileOutputStream(jarDir+"/LOGS/log-ver"+Main.versionNumber+"-"+month+"."+day+"."+year+"."+minutes+"."+seconds+".txt");	//set up stream to capture console to log
+			FileOutputStream fileLOG = new FileOutputStream(jarDir+"/LOGS/log-ver"+Main.versionNumber+"-"+month+"."+day+"."+year+"-"+hour+"."+minutes+"."+seconds+".txt");	//set up stream to capture console to log
 		    NODPrintStream NOD = new NODPrintStream(fileLOG, System.out);	//set up console logging
 		    System.setOut(NOD);	//set up console logging
+			System.out.println("NOD Scraper version: "+Main.versionNumber);
+			System.out.println("for Support, contact Ali M <photonphighter@gmail.com>\n");
+		    System.out.println(sFileName+"\n");	//print to console the file name for logging
 		    writer.append("Tax ID");	//setting up row names of CSV file
 			writer.append(';');
 			writer.append("Grantee Name");
@@ -86,7 +87,7 @@ public class Gather{
 			writer.append("Mailing Address");
 			writer.append('\n');	//rows complete
 			String stringURLofStartSearchPage = "http://www.utahcounty.gov/LandRecords/DocKoi.asp?avKoi=ND&avEntryDate="+MM+"%2F"+DD+"%2F"+YYYY+"&submit=Search";	//the URL of the page including date
-			System.out.printf("OOO-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...\n", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
+			System.out.printf("XXX-->Fetching current ND records from Date %s/%s/%s\n site: <%s>...\n", MM, DD, YYYY, stringURLofStartSearchPage);	//print current action
 			try{
 				try{
 					Connection conn = Jsoup.connect(stringURLofStartSearchPage);	//set up connection
@@ -160,14 +161,15 @@ public class Gather{
 										writer.flush();	//flush the writer after each iteration to keep it from crashing
 										returnInt = linksFromDocumentUponCompletedSearchPageData.size();	//set return value to number of results processed
 									}//end of if statement
-									else System.out.println("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
+									else System.out.println("*** ERROR *** Serial Number Page not available for that name\n");	//let us know if there is no TAX ID for entry
 								}//end of nested for loop
 							}//end of nested for loop
 						}//end of for loop
 					System.out.println("\n----> END OF DATA STREAM");	//print end of data disclosure for logs
+					writer.flush();	//flush the writer, duh
 					writer.close();	//close up the writer to terminate
 					}//end of if statement
-					else{	//if there are less than 100 records, do below
+					else{	//if there are less than 100 records, do below //THIS NEEDS TO BE FIXED
 						for (Element link : linksFromDocumentUponCompletedSearchPageData){	//for every link element in the list of links do what's below
 							String stringFileEntryNumber = trim(link.text(), 35);	//collect the entry number for each case
 							String stringURLOfFileEntryNumberLinkOnPage = link.attr("abs:href");	//collect the URL for connecting to particular entry number's page
@@ -228,7 +230,7 @@ public class Gather{
 										writer.flush();	//flush the writer after each iteration to keep it from crashing
 										returnInt = linksFromDocumentUponCompletedSearchPageData.size();	//set return value to number of results processed
 									}//end of if statement
-									else System.out.println("*** ERROR *** Serial Number Page not available for that name");	//let us know if there is no TAX ID for entry
+									else System.out.println("*** ERROR *** Serial Number Page not available for that name\n");	//let us know if there is no TAX ID for entry
 								}//end of nested for loop
 							}//end of nested for loop
 						}//end of for loop
@@ -238,7 +240,7 @@ public class Gather{
 				}//end of try statement
 				catch (SocketTimeoutException e){
 					e.printStackTrace();	//if there is a timeout, print stack trace
-					System.out.println("!*!*!*! CONNECTION TIMEOUT !*!*!*!");	//also print to console, just cause
+					System.out.println("!*!*!*! CONNECTION TIMEOUT !*!*!*!\n");	//also print to console, just cause
 				}//end of catch statement
 			}//end of try statement
 			catch(IOException e){e.printStackTrace();}	//the usual

@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Main{
 
-	public static String versionNumber = "2.0.0a";
+	public static String versionNumber = "2.0.0b";
 	
 	public Main(){
 		
