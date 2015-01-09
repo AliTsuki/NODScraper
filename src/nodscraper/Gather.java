@@ -30,7 +30,7 @@ public class Gather{
 			CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
 			File jarFile = new File(codeSource.getLocation().toURI().getPath());
 			String jarDir = jarFile.getParentFile().getPath();
-			jarDir = jarDir+"/";
+			jarDir = jarDir+'/';
 			Date date = new Date();	//get date for use below
 			Calendar cal = Calendar.getInstance();	//get date as calendar for below
 			cal.setTime(date);	//set calendar time to date
@@ -45,7 +45,7 @@ public class Gather{
 			String sFileName = (jarDir+"DATA/"+MM+"."+DD+"."+YYYY+"--"+stringDateExecuted);	//set file name to date looked up and date app ran
 			File dirDATA = new File(jarDir+"DATA/");	//create the bones for a new directory for DATA
 			if (!dirDATA.exists()){	//check if directory already exists, if not do below
-				System.out.println("creating directory: " + dirDATA + "\n");	//print to console to affirm creation of directory
+				System.out.println("creating directory: " + dirDATA + '\n');	//print to console to affirm creation of directory
 			    boolean result = false;	//starting value
 			    try{
 			        dirDATA.mkdir();	//create the directory
@@ -58,7 +58,7 @@ public class Gather{
 			}//end of if statement
 			File dirLOGS = new File(jarDir+"LOGS/");	//create the bones for a new directory for LOGS
 			if (!dirLOGS.exists()){	//check if directory already exists, if not do below
-				System.out.println("creating directory: " + dirLOGS + "\n");	//print to console to affirm creation of directory
+				System.out.println("creating directory: " + dirLOGS + '\n');	//print to console to affirm creation of directory
 				boolean result = false;	//starting value
 				try{
 					dirLOGS.mkdir();	//create the directory
@@ -77,7 +77,8 @@ public class Gather{
 		    System.setOut(NOD);	//set up console logging
 			System.out.println("NOD Scraper version: "+Main.versionNumber);
 			System.out.println("for Support, contact Ali M <photonphighter@gmail.com>\n");
-		    System.out.println(sFileName+"\n");	//print to console the file name for logging
+		    System.out.println(sFileName+'\n');	//print to console the file name for logging
+		    writer.append("sep=;"+'\n');
 		    writer.append("Tax ID");	//setting up row names of CSV file
 			writer.append(';');
 			writer.append("Grantee Name");
