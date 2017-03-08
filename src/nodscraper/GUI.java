@@ -72,7 +72,7 @@ public class GUI extends JFrame implements ActionListener{
 		int intMM = Integer.parseInt(MM);	//grab int value for month, for below
 		int intDD = Integer.parseInt(DD);	//grab int value for day, for below
 		int intYYYY = Integer.parseInt(YYYY);	//grab int value for year, for below
-		if ((intYYYY == year && intMM < month) || (intYYYY < year) || (intYYYY == year && intMM == month && intDD <= day)){	//same as above
+		if ((intYYYY < year) || (intYYYY == year && intMM < month) || (intYYYY == year && intMM == month && intDD <= day)){	//same as above
 			if (isValidDate(YYYY+MM+DD) == true){	//same as above
 				try{
 					int results = Gather.collect(MM, DD, YYYY);	//gather results and return results number

@@ -9,7 +9,7 @@ package nodscraper;
 import java.io.IOException;
 
 /**
- * @author Ali M (PhotonPhighter/Admiral Nero the XCIV)
+ * @author Ali M (PhotonPhighter)
  */
 
 public class Main{
